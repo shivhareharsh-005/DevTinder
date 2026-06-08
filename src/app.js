@@ -8,8 +8,22 @@ app.use("/hello", (req, res)=>{
     res.send("hello world from /hello");
 })
 
-app.use("/", (req, res)=>{
-    res.send("hello world");
+
+
+app.get("/user", (req, res)=>{
+    res.send("hello get from user");
+})
+
+app.post("/user", (req, res)=>{
+    res.send("hello post from user");
+})
+
+app.delete("/user", (req, res)=>{
+    res.send("hello delete")
+})
+
+app.patch("/user", (req,res)=>{
+    res.send("hello patch");
 })
 
 
