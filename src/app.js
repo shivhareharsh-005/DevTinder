@@ -1,30 +1,34 @@
 // create server
 
 const express = require('express');
-
 const app = express();
+const connectDB = require('./config/database');
 
-app.get(
-    '/user',
-    (req,res, next)=>{
-        console.log("responce 1 console")
-        next();
-    },
-    (req, res, next)=>{
-        console.log("responce 2 console");
-        res.send("responce 2");
-        next();
-    },
-    (req, res )=>{
-        console.log("responce 3 console");
-        res.send("responce 3");
+const User = require('./models/user');
+
+app.post('/signup', async(req, res)=>{
+    const user = new User({
+        firstName: "Himanshu",
+        lastName: "Shivhare",
+        email: "shivharehimanshu@gmail.com",
+        password: "himanshu@123"
+    })
+    try{
+        await user.save();
+    res.send("user created successfully");
     }
-)
-
-
-
-
-
-app.listen(7777,()=>{
-    console.log("server is running on port 7777");
+    catch(err){
+        res.status(400).send("Error creating user" + err.massage);
+    }
 })
+
+connectDB()
+.then(()=>{
+    console.log("database connected successfully");
+    app.listen(7777, ()=>{
+        console.log("server is running on port 7777");
+    })
+})
+.catch((err)=>{
+    console.error("Error connecting to database:", err);
+});
